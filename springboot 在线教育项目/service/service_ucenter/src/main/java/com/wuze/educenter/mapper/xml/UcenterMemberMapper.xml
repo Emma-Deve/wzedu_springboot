@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuze.educenter.mapper.UcenterMemberMapper">
+
+<!--    统计当天的注册人数，id是绑定的方法名称   resultType 是返回类型-->
+<!--    注： 如果有一个参数， #{xxx} 里面写任意名称即可，
+            如果是多个参数，里面的名称要对应传入的方法参数的 @Param("xxx")里面的名称-->
+    <select id="getRegisterCountDay" resultType="int">
+        select count(1) from ucenter_member where Date(gmt_create) = #{day};
+    </select>
+</mapper>

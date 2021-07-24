@@ -1,0 +1,69 @@
+#### application.yml
+spring:
+  application:
+    # \u8FD9\u4E2A\u670D\u52A1\u540D\u79F0 \u542B\u4E0B\u5212\u7EBF_ \u5728nacos\u6CE8\u518C\u4E2D\u5FC3\u53EF\u80FD\u4F1A\u51FA\u9519\uFF0C\u5C3D\u91CF\u4E0D\u8981\u7528\u4E0B\u5212\u7EBF\uFF0C\u7528\u6A2A\u6746-\u5C31\u884C
+    name: service-cms
+  profiles:
+    active: dev
+
+  # Nacos \u914D\u7F6E (SpringCloud)\uFF082021/01/26\uFF09
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+
+  # \u914D\u7F6Emysql (spring.datasource.xxx)
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/wuze_edu?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+    hikari:
+      connection-test-query: SELECT 1
+      connection-timeout: 60000
+      idle-timeout: 500000
+      max-lifetime: 540000
+      maximum-pool-size: 12
+      minimum-idle: 10
+      pool-name: GuliHikariPool
+
+  #jackson \u683C\u5F0F\u914D\u7F6E \uFF08spring.jackson.xxx\uFF09
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  # redis \u914D\u7F6E\uFF08spring\u4E0B\uFF09
+  redis:
+    host: 116.62.106.210  # \u7ED1\u5B9A\u670D\u52A1\u5668
+    port: 6379 # \u9ED8\u8BA4\u662F 6379
+    database: 0
+    timeout: 1800000
+    lettuce:
+      pool:
+        max-active: 20
+        # \u6700\u5927\u963B\u585E\u7B49\u5F85\u65F6\u95F4\uFF08\u8D1F\u6570\u8868\u793A\u6CA1\u6709\u9650\u5236\uFF09
+        max-wait: -1
+        max-idle: 5
+        min-idle: 0
+
+
+
+####  application-dev.yml
+# \u914D\u7F6E\u670D\u52A1\u7AEF\u53E3
+server:
+  port: 8004
+
+# \u914D\u7F6Emp
+mybatis-plus:
+  # \u6CE8\u91CA\u6389mp\u9ED8\u8BA4\u65E5\u5FD7\u5904\u7406\uFF0C\u91C7\u7528\u7EDF\u4E00\u65E5\u5FD7\u5904\u7406(2021.01.05)
+  #configuration:
+  #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:com/wuze/educms/mapper/xml/*.xml
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+

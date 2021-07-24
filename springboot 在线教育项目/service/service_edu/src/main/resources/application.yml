@@ -1,0 +1,71 @@
+#### application.yml
+spring:
+  application:
+    # 这个服务名称 含下划线_ 在nacos注册中心可能会出错，尽量不要用下划线，用横杆-就行
+    name: service-edu
+  profiles:
+    active: dev
+
+  # Nacos 配置 (SpringCloud)（2021/01/26）
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+
+  # 配置mysql (spring.datasource.xxx)
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/wuze_edu?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+    hikari:
+      connection-test-query: SELECT 1
+      connection-timeout: 60000
+      idle-timeout: 500000
+      max-lifetime: 540000
+      maximum-pool-size: 12
+      minimum-idle: 10
+      pool-name: GuliHikariPool
+
+  #jackson 格式配置 （spring.jackson.xxx）
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+
+
+####  application-dev.yml
+# 配置服务端口
+server:
+  port: 8001
+
+# 配置mp
+mybatis-plus:
+  # 注释掉mp默认日志处理，采用统一日志处理(2021.01.05)
+  #configuration:
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:com/wuze/eduservice/mapper/xml/*.xml
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+
+
+
+# 配置 Hystrix
+# 开启熔断机制
+#feign:
+#  hystrix:
+#    enabled: true
+# 设置 hystrix 超时时间，默认是 1000ms
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds:5000
+
